@@ -1,4 +1,8 @@
 #!/bin/bash
+
+set -e
+set -o pipefail
+
 gunzip -c data/lang/g.txt.gz | \
    utils/remove_oovs.pl data/lang/oov.txt | \
    utils/phi2disambig.pl | utils/s2eps.pl | \

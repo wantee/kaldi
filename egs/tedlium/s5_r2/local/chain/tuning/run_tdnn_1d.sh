@@ -67,22 +67,21 @@ echo "$0 $@"  # Print the command line for logging
 . ./path.sh
 . ./utils/parse_options.sh
 
-
-if ! cuda-compiled; then
-  cat <<EOF && exit 1
-This script is intended to be used with GPUs but you have not compiled Kaldi with CUDA
-If you want to use GPUs (and have them), go to src/, and configure and make on a machine
-where "nvcc" is installed.
-EOF
-fi
-
-local/nnet3/run_ivector_common.sh --stage $stage \
-                                  --nj $nj \
-                                  --min-seg-len $min_seg_len \
-                                  --train-set $train_set \
-                                  --gmm $gmm \
-                                  --num-threads-ubm $num_threads_ubm \
-                                  --nnet3-affix "$nnet3_affix"
+#if ! cuda-compiled; then
+#  cat <<EOF && exit 1
+#This script is intended to be used with GPUs but you have not compiled Kaldi with CUDA
+#If you want to use GPUs (and have them), go to src/, and configure and make on a machine
+#where "nvcc" is installed.
+#EOF
+#fi
+#
+#local/nnet3/run_ivector_common.sh --stage $stage \
+#                                  --nj $nj \
+#                                  --min-seg-len $min_seg_len \
+#                                  --train-set $train_set \
+#                                  --gmm $gmm \
+#                                  --num-threads-ubm $num_threads_ubm \
+#                                  --nnet3-affix "$nnet3_affix"
 
 
 gmm_dir=exp/$gmm
@@ -95,10 +94,10 @@ lores_train_data_dir=data/${train_set}_sp_comb
 train_ivector_dir=exp/nnet3${nnet3_affix}/ivectors_${train_set}_sp_hires_comb
 
 
-for f in $gmm_dir/final.mdl $train_data_dir/feats.scp $train_ivector_dir/ivector_online.scp \
-    $lores_train_data_dir/feats.scp $ali_dir/ali.1.gz $gmm_dir/final.mdl; do
-  [ ! -f $f ] && echo "$0: expected file $f to exist" && exit 1
-done
+#for f in $gmm_dir/final.mdl $train_data_dir/feats.scp $train_ivector_dir/ivector_online.scp \
+#    $lores_train_data_dir/feats.scp $ali_dir/ali.1.gz $gmm_dir/final.mdl; do
+#  [ ! -f $f ] && echo "$0: expected file $f to exist" && exit 1
+#done
 
 if [ $stage -le 14 ]; then
   echo "$0: creating lang directory with one state per phone."
@@ -243,8 +242,8 @@ if [ $stage -le 20 ]; then
           --online-ivector-dir exp/nnet3${nnet3_affix}/ivectors_${dset}_hires \
           --scoring-opts "--min-lmwt 5 " \
          $dir/graph data/${dset}_hires $dir/decode_${dset} || exit 1;
-      steps/lmrescore_const_arpa.sh --cmd "$decode_cmd" data/lang data/lang_rescore \
-        data/${dset}_hires ${dir}/decode_${dset} ${dir}/decode_${dset}_rescore || exit 1
+#      steps/lmrescore_const_arpa.sh --cmd "$decode_cmd" data/lang data/lang_rescore \
+#        data/${dset}_hires ${dir}/decode_${dset} ${dir}/decode_${dset}_rescore || exit 1
     ) || touch $dir/.error &
   done
   wait

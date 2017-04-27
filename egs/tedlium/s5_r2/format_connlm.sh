@@ -2,6 +2,7 @@
 
 set -e
 set -o pipefail
+. path.sh
 
 gunzip -c data/lang/g.txt.gz | \
    utils/remove_oovs.pl data/lang/oov.txt | \

@@ -1,0 +1,4 @@
+#for d in  exp/chain/tdnn1b_sp_bi/decode_*; do grep Sum $d/*ore*/*ys | utils/best_wer.sh
+
+%WER 11.3 | 507 17783 | 90.4 6.9 2.7 1.7 11.3 81.7 | 0.007 | exp/chain/tdnn1b_sp_bi/decode_dev/score_8_0.5/ctm.filt.filt.sys
+%WER 10.9 | 1155 27500 | 90.6 6.8 2.6 1.5 10.9 77.7 | 0.105 | exp/chain/tdnn1b_sp_bi/decode_test/score_9_0.0/ctm.filt.filt.sys

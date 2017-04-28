@@ -32,7 +32,8 @@ mkdir -p $tempdir
 cat $text_in | awk '{for (x=2;x<=NF;x++) {printf("%s ", $x)} printf("\n");}' >$tempdir/text
 cat $text_in | awk '{print $1}' > $tempdir/ids # e.g. utterance ids.
 
-connlm-eval --print-sent-prob=true --log-file=$tempdir/eval.log \
+connlm-eval --print-sent-prob=true --reader^drop-empty-line=false \
+            --log-file=$tempdir/eval.log \
             $dir/final.clm $tempdir/text $tempdir/loglikes
 
 awk '{print -$1}' $tempdir/loglikes >$tempdir/scores

@@ -33,7 +33,9 @@ cat $text_in | awk '{for (x=2;x<=NF;x++) {printf("%s ", $x)} printf("\n");}' >$t
 cat $text_in | awk '{print $1}' > $tempdir/ids # e.g. utterance ids.
 
 connlm-eval --print-sent-prob=true --log-file=$tempdir/eval.log \
-            $dir/final.clm $tempdir/text $tempdir/scores
+            $dir/final.clm $tempdir/text $tempdir/loglikes
+
+awk '{print -$1}' $tempdir/loglikes >$tempdir/scores
 
 # scores out, with utterance-ids.
 paste $tempdir/ids $tempdir/scores  > $scores_out

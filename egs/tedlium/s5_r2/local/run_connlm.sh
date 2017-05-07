@@ -35,10 +35,10 @@ if [ $stage -le 1 ]; then
     resultsdir=${sourcedir}_connlm
     rm -rf ${resultsdir}_L0.5
     steps/connlmrescore.sh --skip_scoring false --N 100 0.5 data/lang $connlm_dir data/${dset}_hires $sourcedir ${resultsdir}_L0.5
-    for coef in 0.25 0.75; do
-        rm -rf ${resultsdir}_L${coef}
-        cp -r ${resultsdir}_L0.5 ${resultsdir}_L${coef}
-       steps/connlmrescore.sh --skip_scoring false --N 100 --stage 7 $coef data/lang $connlm_dir data/${dset}_hires $sourcedir ${resultsdir}_L0.5
+    for coef in 0.25 0.75 1.0; do
+      rm -rf ${resultsdir}_L${coef}
+      cp -r ${resultsdir}_L0.5 ${resultsdir}_L${coef}
+      steps/connlmrescore.sh --skip_scoring false --N 100 --stage 7 $coef data/lang $connlm_dir data/${dset}_hires $sourcedir ${resultsdir}_L${coef}
     done
   done
 fi
